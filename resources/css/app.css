@@ -1,0 +1,347 @@
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+/* ============================================================
+   PATHFINDR SUPER ADMIN — GLASS DESIGN SYSTEM
+   All glass components reference these tokens.
+   Never hardcode raw hex/rgba in component markup.
+============================================================ */
+
+:root {
+    /* Glass surfaces */
+    --glass-bg:           rgba(255, 255, 255, 0.08);
+    --glass-bg-hover:     rgba(255, 255, 255, 0.12);
+    --glass-bg-deep:      rgba(255, 255, 255, 0.04);
+    --glass-border:       rgba(255, 255, 255, 0.15);
+    --glass-border-hover: rgba(255, 255, 255, 0.28);
+    --glass-shadow:       0 8px 32px rgba(0, 0, 0, 0.4);
+    --glass-shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.55);
+    --glass-glow:         0 0 24px rgba(255, 255, 255, 0.15);
+    --glass-inner-light:  inset 0 1px 0 rgba(255, 255, 255, 0.10);
+
+    /* Blur */
+    --blur-glass:   20px;
+    --blur-modal:   28px;
+    --blur-sidebar: 32px;
+
+    /* Radii */
+    --radius-glass: 20px;
+    --radius-card:  16px;
+    --radius-sm:    12px;
+    --radius-badge: 99px;
+
+    /* Typography */
+    --text-primary: #FFFFFF;
+    --text-muted:   #9CA3AF;
+    --text-dim:     rgba(255, 255, 255, 0.35);
+
+    /* Accent palette */
+    --accent-blue:   #2563EB;
+    --accent-purple: #7C3AED;
+    --accent-green:  #10B981;
+    --accent-amber:  #F59E0B;
+    --accent-red:    #EF4444;
+
+    /* Backgrounds */
+    --bg-gradient: linear-gradient(160deg, #0B1124 0%, #1A1A2E 100%);
+    --bg-base:     #0B1124;
+
+    /* Transitions */
+    --transition-glass: all 0.3s ease;
+    --transition-fast:  all 0.18s ease;
+}
+
+/* ── Page Background ────────────────────────────────────────── */
+.sa-page {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Fixed dot-grid depth layer — z-index below everything */
+.sa-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+    background-size: 28px 28px;
+}
+
+/* Ambient colour blobs */
+.sa-page::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 70% 55% at 15% 12%, rgba(37,99,235,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 45% at 85% 85%, rgba(124,58,237,0.14) 0%, transparent 55%);
+}
+
+/* ── Core Glass Card ────────────────────────────────────────── */
+.glass-card {
+    background:            var(--glass-bg);
+    backdrop-filter:       blur(var(--blur-glass));
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    border:                1px solid var(--glass-border);
+    border-radius:         var(--radius-glass);
+    box-shadow:            var(--glass-shadow), var(--glass-inner-light);
+    transition:            var(--transition-glass);
+}
+.glass-card:hover {
+    background:   var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow:   var(--glass-shadow-hover), var(--glass-glow), var(--glass-inner-light);
+    transform:    translateY(-2px) scale(1.01);
+}
+/* Non-interactive card (no hover lift) */
+.glass-card.static:hover {
+    transform: none;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-inner-light);
+}
+
+/* ── Glass Button ───────────────────────────────────────────── */
+.glass-btn {
+    display:         inline-flex;
+    align-items:     center;
+    justify-content: center;
+    gap:             8px;
+    padding:         10px 20px;
+    font-size:       0.875rem;
+    font-weight:     600;
+    color:           var(--text-primary);
+    background:      var(--glass-bg);
+    backdrop-filter: blur(var(--blur-glass));
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    border:          1px solid var(--glass-border);
+    border-radius:   var(--radius-sm);
+    box-shadow:      var(--glass-shadow);
+    cursor:          pointer;
+    transition:      var(--transition-glass);
+    text-decoration: none;
+    white-space:     nowrap;
+    font-family:     inherit;
+}
+.glass-btn:hover {
+    background:   var(--glass-bg-hover);
+    border-color: var(--glass-border-hover);
+    box-shadow:   var(--glass-shadow-hover), var(--glass-glow);
+    transform:    scale(1.02);
+}
+.glass-btn:active  { transform: scale(0.98); }
+.glass-btn:focus-visible {
+    outline: 2px solid rgba(37,99,235,0.7);
+    outline-offset: 2px;
+}
+
+/* Variant: primary (blue tint) */
+.glass-btn-primary {
+    background:   rgba(37, 99, 235, 0.25);
+    border-color: rgba(37, 99, 235, 0.45);
+}
+.glass-btn-primary:hover {
+    background:   rgba(37, 99, 235, 0.42);
+    border-color: rgba(37, 99, 235, 0.7);
+    box-shadow:   var(--glass-shadow-hover), 0 0 28px rgba(37,99,235,0.35);
+}
+
+/* Variant: danger (red tint) */
+.glass-btn-danger {
+    background:   rgba(239, 68, 68, 0.18);
+    border-color: rgba(239, 68, 68, 0.35);
+}
+.glass-btn-danger:hover {
+    background:   rgba(239, 68, 68, 0.32);
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow:   var(--glass-shadow-hover), 0 0 24px rgba(239,68,68,0.3);
+}
+
+/* ── Glass Input ────────────────────────────────────────────── */
+.glass-input {
+    width:           100%;
+    background:      rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border:          1px solid var(--glass-border);
+    border-radius:   var(--radius-sm);
+    padding:         11px 16px;
+    color:           var(--text-primary);
+    font-size:       0.875rem;
+    font-family:     inherit;
+    outline:         none;
+    transition:      var(--transition-fast);
+}
+.glass-input::placeholder { color: var(--text-dim); }
+.glass-input:focus {
+    border-color: rgba(37, 99, 235, 0.65);
+    background:   rgba(255, 255, 255, 0.10);
+    box-shadow:   0 0 0 3px rgba(37, 99, 235, 0.18), 0 4px 16px rgba(0,0,0,0.3);
+}
+/* Icon-left variant — pair with a wrapper that positions the icon */
+.glass-input-icon { padding-left: 40px; }
+
+select.glass-input option {
+    background: #1A1A2E;
+    color: #fff;
+}
+
+/* ── Glass Table ────────────────────────────────────────────── */
+.glass-table-wrap {
+    background:      var(--glass-bg-deep);
+    backdrop-filter: blur(var(--blur-glass));
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    border:          1px solid var(--glass-border);
+    border-radius:   var(--radius-glass);
+    box-shadow:      var(--glass-shadow);
+    overflow:        hidden;
+}
+.glass-table {
+    width:           100%;
+    border-collapse: collapse;
+}
+.glass-table thead tr {
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+.glass-table th {
+    padding:        11px 18px;
+    text-align:     left;
+    font-size:      0.68rem;
+    font-weight:    700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color:          var(--text-dim);
+    white-space:    nowrap;
+}
+.glass-table td {
+    padding:     13px 18px;
+    font-size:   0.82rem;
+    color:       rgba(255, 255, 255, 0.72);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition:  background 0.15s;
+}
+.glass-table tbody tr:last-child td { border-bottom: none; }
+.glass-table tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* ── Glass Badge ────────────────────────────────────────────── */
+.glass-badge {
+    display:         inline-flex;
+    align-items:     center;
+    gap:             5px;
+    padding:         3px 11px;
+    border-radius:   var(--radius-badge);
+    font-size:       0.7rem;
+    font-weight:     600;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border:          1px solid transparent;
+    white-space:     nowrap;
+}
+.glass-badge-green  { background: rgba(16,185,129,0.14); border-color: rgba(16,185,129,0.28); color: #6EE7B7; }
+.glass-badge-blue   { background: rgba(37,99,235,0.14);  border-color: rgba(37,99,235,0.28);  color: #93C5FD; }
+.glass-badge-amber  { background: rgba(245,158,11,0.14); border-color: rgba(245,158,11,0.28); color: #FCD34D; }
+.glass-badge-red    { background: rgba(239,68,68,0.14);  border-color: rgba(239,68,68,0.28);  color: #FCA5A5; }
+.glass-badge-purple { background: rgba(124,58,237,0.14); border-color: rgba(124,58,237,0.28); color: #C4B5FD; }
+.glass-badge-gray   { background: rgba(255,255,255,0.06);border-color: rgba(255,255,255,0.12);color: #9CA3AF; }
+
+/* ── Glass Modal ────────────────────────────────────────────── */
+.glass-modal-backdrop {
+    position:        fixed;
+    inset:           0;
+    z-index:         100;
+    background:      rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    padding:         16px;
+    animation:       modalBackdropIn 0.25s ease forwards;
+}
+.glass-modal-panel {
+    background:      rgba(255,255,255,0.08);
+    backdrop-filter: blur(var(--blur-modal));
+    -webkit-backdrop-filter: blur(var(--blur-modal));
+    border:          1px solid var(--glass-border);
+    border-radius:   var(--radius-glass);
+    box-shadow:      0 24px 64px rgba(0,0,0,0.65), var(--glass-inner-light);
+    width:           100%;
+    max-width:       520px;
+    max-height:      90vh;
+    overflow-y:      auto;
+    animation:       modalPanelIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes modalBackdropIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes modalPanelIn {
+    from { opacity: 0; transform: scale(0.92) translateY(12px); }
+    to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+.glass-modal-backdrop.closing {
+    animation: modalBackdropOut 0.2s ease forwards;
+}
+.glass-modal-backdrop.closing .glass-modal-panel {
+    animation: modalPanelOut 0.2s ease forwards;
+}
+@keyframes modalBackdropOut {
+    to { opacity: 0; }
+}
+@keyframes modalPanelOut {
+    to { opacity: 0; transform: scale(0.95) translateY(8px); }
+}
+
+/* ── Progress bar ───────────────────────────────────────────── */
+.glass-progress-track {
+    height:          6px;
+    border-radius:   var(--radius-badge);
+    background:      rgba(255, 255, 255, 0.08);
+    overflow:        hidden;
+}
+.glass-progress-fill {
+    height:          100%;
+    border-radius:   var(--radius-badge);
+    transition:      width 0.9s ease;
+}
+
+/* ── Field label ────────────────────────────────────────────── */
+.glass-label {
+    display:         block;
+    font-size:       0.68rem;
+    font-weight:     700;
+    text-transform:  uppercase;
+    letter-spacing:  0.08em;
+    color:           var(--text-dim);
+    margin-bottom:   6px;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.glass-divider {
+    border:      none;
+    border-top:  1px solid rgba(255,255,255,0.07);
+    margin:      0;
+}
+
+/* ── Page enter animation ───────────────────────────────────── */
+.sa-page-enter {
+    animation: saPageEnter 0.32s ease forwards;
+}
+@keyframes saPageEnter {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+.sa-scroll::-webkit-scrollbar         { width: 5px; height: 5px; }
+.sa-scroll::-webkit-scrollbar-track   { background: rgba(255,255,255,0.02); }
+.sa-scroll::-webkit-scrollbar-thumb   { background: rgba(255,255,255,0.12); border-radius: 99px; }
+.sa-scroll::-webkit-scrollbar-thumb:hover { background: rgba(37,99,235,0.5); }
